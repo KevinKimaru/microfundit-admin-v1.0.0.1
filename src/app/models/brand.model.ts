@@ -9,6 +9,7 @@ export class Brand {
     dateAdded: Date;
     logoUrl: string;
     logoImage: string;
+    description: string;
 
     constructor() {
         this.id = null;

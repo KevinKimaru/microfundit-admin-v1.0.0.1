@@ -1,0 +1,29 @@
+<form class="ui form" [formGroup]="form" (ngSubmit)="onSubmit(form)">
+  <input type="hidden" name="id" [formControl]="form.controls['id']" [(ngModel)]="brandService.currentBrand && brandService.currentBrand.id">
+  <div class="field">
+    <label for="name">Name</label>
+    <input id="name" type="text" name="name" placeholder="Name" [class.error]="!form.controls['name'].valid && form.controls['name'].touched"
+      [formControl]="form.controls['name']" [(ngModel)]="brandService.currentBrand && brandService.currentBrand.name">
+  </div>
+  <div class="field">
+    <label for="description">Short Description</label>
+    <textarea rows="2" id="description" [class.error]="!form.controls['description'].valid && form.controls['description'].touched"
+      [formControl]="form.controls['description']" [(ngModel)]="brandService.currentBrand && brandService.currentBrand.description"></textarea>
+  </div>
+  <div class="card border-warning">
+    <div class="card-header">Icon</div>
+    <div class="card-body">
+      <h4 class="card-title">Please choose an icon for this brand</h4>
+      <input type="file" class="upload1" name="upload" id="filer_example2">
+    </div>
+  </div>
+  <!-- end card-->
+  <div class="modal-footer">
+    <button [disabled]="!form.valid" type="submit" class="ui button orange" *ngIf="brandService.currentBrand && brandService.currentBrand.id">Update Brand</button>
+    <button [disabled]="!form.valid" type="submit" class="ui button orange" *ngIf="!brandService.currentBrand">Add Brand</button>
+
+    <button type="button" class="ui button secondary" data-dismiss="modal">
+      Cancel
+    </button>
+  </div>
+</form>

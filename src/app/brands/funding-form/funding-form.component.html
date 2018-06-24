@@ -1,0 +1,21 @@
+<form class="ui form" [formGroup]="form" (ngSubmit)="onSubmit(form)">
+  <input type="hidden" name="id" [formControl]="form.controls['id']" [(ngModel)]="fundingService.currentFunding && fundingService.currentFunding.id">
+  <div class="field">
+    <label for="name">Placed Amount</label>
+    <input id="placedAmount" type="text" name="placedAmount" placeholder="Amount" [class.error]="!form.controls['placedAmount'].valid && form.controls['placedAmount'].touched"
+      [formControl]="form.controls['placedAmount']" [(ngModel)]="fundingService.currentFunding && fundingService.currentFunding.placedAmount">
+  </div>
+  <div class="field">
+    <label for="ratio">Ratio</label>
+    <input id="ratio" [class.error]="!form.controls['ratio'].valid && form.controls['ratio'].touched"
+      [formControl]="form.controls['ratio']" [(ngModel)]="fundingService.currentFunding && fundingService.currentFunding.ratio" />
+  </div>
+  <div class="modal-footer">
+    <button [disabled]="!form.valid" type="submit" class="ui button orange" *ngIf="fundingService.currentFunding && fundingService.currentFunding.id">Update Funding</button>
+    <button [disabled]="!form.valid" type="submit" class="ui button orange" *ngIf="!fundingService.currentFunding">Add Funding</button>
+
+    <button type="button" class="ui button secondary" data-dismiss="modal">
+      Cancel
+    </button>
+  </div>
+</form>

@@ -1,0 +1,26 @@
+<form class="ui form" [formGroup]="form" (ngSubmit)="onSubmit(form)">
+  <input type="hidden" name="id" [formControl]="form.controls['id']" [(ngModel)]="storyService.currentStory && storyService.currentStory.id">
+  <div class="field">
+    <label for="description">Description</label>
+    <textarea rows="3" id="description" [class.error]="!form.controls['description'].valid && form.controls['description'].touched"
+      [formControl]="form.controls['description']" [(ngModel)]="storyService.currentStory && storyService.currentStory.description"></textarea>
+  </div>
+  <div class="field">
+    <label for="targetAmount">Target Amount</label>
+    <input id="targetAmount" type="number" name="targetAmount" placeholder="Target Amount" [class.error]="!form.controls['targetAmount'].valid && form.controls['targetAmount'].touched"
+      [formControl]="form.controls['targetAmount']" [(ngModel)]="storyService.currentStory && storyService.currentStory.targetAmount">
+  </div>
+  <div class="field">
+    <label for="timeAllocated">Time Allocated(Days)</label>
+    <input id="timeAllocated" type="number" name="timeAllocated" placeholder="Time Allocated" [class.error]="!form.controls['timeAllocated'].valid && form.controls['timeAllocated'].touched"
+      [formControl]="form.controls['timeAllocated']" [(ngModel)]="storyService.currentStory && storyService.currentStory.timeAllocated">
+  </div>
+  <div class="modal-footer">
+    <button [disabled]="!form.valid" type="submit" class="ui button orange" *ngIf="storyService.currentStory && storyService.currentStory.id">Update Story</button>
+    <button [disabled]="!form.valid" type="submit" class="ui button orange" *ngIf="!storyService.currentStory">Add Story</button>
+
+    <button type="button" class="ui button secondary" data-dismiss="modal">
+      Cancel
+    </button>
+  </div>
+</form>

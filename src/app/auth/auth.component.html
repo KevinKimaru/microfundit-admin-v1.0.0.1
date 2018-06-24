@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card-group">
+        <div class="card p-4">
+          <div class="alert alert-dismissable alert-danger show fade" 
+          *ngIf="isLoginError || authService.authError || authService.sessionExpiredError">
+            <button type="button" class="close" data-dismiss="alert" aria-label="close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <strong *ngIf="isLoginError">
+              Wrong credentials. Please try again.
+            </strong>
+            <strong *ngIf="authService.authError">
+              Access denied. Please login as admin.
+            </strong>
+            <strong *ngIf="authService.sessionExpiredError">
+              Your session has expired. Please login again.
+            </strong>
+          </div>
+          <div class="card-body">
+            <h1>Login</h1>
+            <p class="text-muted">Login to access the system</p>
+            <form role="form" #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <i class="icon-user"></i>
+                  </span>
+                </div>
+                <input name="username" #username ngModel required type="text" class="form-control" id="email" placeholder="Username">
+              </div>
+              <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <i class="icon-lock"></i>
+                  </span>
+                </div>
+                <input name="password" #password ngModel required type="password" class="form-control" id="password" placeholder="Password">
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <button [disabled]="!loginForm.valid" type="submit" class="btn btn-primary px-4">Login</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

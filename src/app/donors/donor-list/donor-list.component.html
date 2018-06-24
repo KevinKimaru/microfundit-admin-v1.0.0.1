@@ -1,0 +1,36 @@
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a [routerLink]="['/home']">Home</a>
+  </li>
+  <li class="breadcrumb-item active">Donors</li>
+</ol>
+<div class="my-body">
+
+  <h1 class="ui horizontal divider header">
+    Donors ({{ donorService.donors?.length }})
+  </h1>
+
+  <table class="ui selectable inverted table">
+    <thead>
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Gender</th>
+        <th>Phone Number</th>
+        <th>Email</th>
+        <th>Date of Birth</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr  *ngFor="let donor of donorService.donors" (click)="navigate(donor)">
+        <th>{{ donor?.firstName }}</th>
+        <th>{{ donor?.lastName }}</th>
+        <th>{{ (donor?.gender) == 1 ? 'Male' : 'Female' }}</th>
+        <th>{{ donor?.phoneNumber }}</th>
+        <th>{{ donor?.email }}</th>
+        <th>{{ donor?.dateOfBirth }}</th>
+      </tr>
+    </tbody>
+  </table>
+
+</div>

@@ -1,0 +1,15 @@
+<div *ngIf="currentFileUpload" class="progress">
+  <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" attr.aria-valuenow="{{progress.percentage}}"
+    aria-valuemin="0" aria-valuemax="100" [ngStyle]="{width:progress.percentage+'%'}">
+    {{progress.percentage}}%</div>
+</div>
+
+<div class="card border-warning">
+  <div class="card-header">{{ isLogo? 'Change Profile Picture' : 'Add Image'}}</div>
+  <div class="card-body">
+    <h4 class="card-title">Please choose image: </h4>
+    <input type="file" class="upload1" name="upload" id="filer_example2" (change)="selectFile($event)">
+  </div>
+</div>
+
+<button class="btn btn-success" [disabled]="!selectedFiles" (click)="upload()">Upload</button>

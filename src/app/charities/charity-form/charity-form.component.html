@@ -1,0 +1,21 @@
+<form class="ui form" [formGroup]="form" (ngSubmit)="onSubmit(form)">
+  <input type="hidden" name="id" [formControl]="form.controls['id']" [(ngModel)]="charityService.currentCharity && charityService.currentCharity.id">
+  <div class="field">
+    <label for="name">Name</label>
+    <input id="name" type="text" name="name" placeholder="Name" [class.error]="!form.controls['name'].valid && form.controls['name'].touched"
+      [formControl]="form.controls['name']" [(ngModel)]="charityService.currentCharity && charityService.currentCharity.name">
+  </div>
+  <div class="field">
+    <label for="description">Description</label>
+    <textarea rows="3" id="description" [class.error]="!form.controls['description'].valid && form.controls['description'].touched"
+      [formControl]="form.controls['description']" [(ngModel)]="charityService.currentCharity && charityService.currentCharity.description"></textarea>
+  </div>
+  <div class="modal-footer">
+    <button [disabled]="!form.valid" type="submit" class="ui button orange" *ngIf="charityService.currentCharity && charityService.currentCharity.id">Update Charity</button>
+    <button [disabled]="!form.valid" type="submit" class="ui button orange" *ngIf="!charityService.currentCharity">Add Charity</button>
+
+    <button type="button" class="ui button secondary" data-dismiss="modal">
+      Cancel
+    </button>
+  </div>
+</form>

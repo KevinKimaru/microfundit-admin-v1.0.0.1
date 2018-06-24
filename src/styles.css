@@ -1,1 +1,54 @@
 /* You can add global styles to this file, and also import other style files */
+@import "../node_modules/ngx-toastr/toastr.css";
+@import './assets/css/bootstrap.min.css';
+@import './assets/plugins/switchery/switchery.min.css';
+@import './assets/font-awesome/css/font-awesome.min.css';
+@import './assets/css/style.css';
+@import './assets/css/style_core_ui.css';
+@import './assets/semantic/semantic.min.css';
+@import './assets/plugins/jquery.filer/css/jquery.filer.css';
+@import './assets/plugins/jquery.filer/css/themes/jquery.filer-dragdropbox-theme.css';
+/* fancy box */
+@import './assets/plugins/fancybox/jquery.fancybox.min.css';
+
+html body {
+    /* background: linear-gradient(to bottom right, #ff6600, #003399); */
+    max-height: 100vh;
+    background: #ebf0fa;
+}
+
+.bg-white {
+  background: #fff;
+}
+
+/* .ui.card,
+.ui.cards>.card {
+  background-color: #ff6600;
+  color: white;
+} */
+
+.ui.card>.content,
+.ui.cards>.card>.content {
+  /* background-color: #ff6600; */
+  /* background-color: #3333ff; */
+}
+
+.ui.card>.content>a.header,
+.ui.cards>.card>.content>a.header,
+.ui.card .meta,
+.ui.cards>.card .meta,
+.ui.card>.content>.description,
+.ui.cards>.card>.content>.description,
+.ui.card>.extra a:not(.ui),
+.ui.cards>.card>.extra a:not(.ui) {
+  /* color: white; */
+}
+
+.my-body {
+    margin-left: 16px;
+    margin-right: 16px;
+}
+
+.custom-modal .modal-header {    
+  background-color: #000;
+}

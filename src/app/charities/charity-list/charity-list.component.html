@@ -1,0 +1,60 @@
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a [routerLink]="['/home']">Home</a>
+  </li>
+  <li class="breadcrumb-item active">Charities</li>
+</ol>
+
+<div class="my-body">
+
+  <h1 class="ui horizontal divider header">
+    <i class="bar chart icon"></i>
+    Charities
+  </h1>
+
+  <div class="modal fade custom-modal" tabindex="-1" role="dialog" aria-hidden="true" id="modal_add_charity">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title">Add new Charity</h5>
+          <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Close</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <app-charity-form></app-charity-form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ui inverted segment">
+    <div class="ui orange inverted statistic">
+      <div class="value">
+        {{ charityService.charities?.length }}
+      </div>
+      <div class="label">
+        Charities
+      </div>
+    </div>
+    <button id="myBtn" class="ui right floated icon huge orange button" data-toggle="modal" data-target="#modal_add_charity">
+      <i class="icon add"></i> Add Charity</button>
+  </div>
+  <div class="ui five doubling cards">
+    <a class="ui fluid raised orange card" *ngFor="let charity of charityService.charities" (click)="navigate(charity)">
+      <div class="image">
+        <img src="{{ charity?.logoImage && charity?.logoUrl || 'assets/images/avatars/test.svg' }}">
+      </div>
+      <div class="content">
+        <div class="header">{{ charity?.name }}</div>
+        <div class="description">
+         {{ charity?.description }}
+        </div>
+      </div>
+    </a>
+  </div>
+
+</div>

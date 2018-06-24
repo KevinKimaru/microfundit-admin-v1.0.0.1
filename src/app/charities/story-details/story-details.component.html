@@ -1,0 +1,221 @@
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a [routerLink]="['/home']">Home</a>
+  </li>
+  <li class="breadcrumb-item">
+    <a [routerLink]="['/charities']">Charities</a>
+  </li>
+  <li class="breadcrumb-item">
+    <a [routerLink]="['/charities', charityService.currentCharity && charityService.currentCharity?.id || storyService.currentStory?.charity && storyService.currentStory?.charity?.id]">{{ storyService.currentStory?.charity?.name }}</a>
+  </li>
+  <li class="breadcrumb-item active">Story {{ storyService.currentStory?.id }}</li>
+</ol>
+<div class="my-body">
+
+  <div class="modal fade custom-modal" tabindex="-1" role="dialog" aria-hidden="true" id="modal_story_logo">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title">{{ isLogo ? 'Edit story profile picture': 'Add Image' }}</h5>
+          <button type="button" class="close" data-dismiss="modal" (click)="closeUpload()">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Close</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <app-story-logo [isLogo]="isLogo"></app-story-logo>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade custom-modal" tabindex="-1" role="dialog" aria-hidden="true" id="modal_update_story">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title">Update Story</h5>
+          <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Close</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <app-story-form></app-story-form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card mb-3">
+    <div class="card-header">
+      <h3>
+        <i class="fa fa-image"></i> Story images</h3>
+      Click on image for full display
+      <div class="ui right floated orange button" data-toggle="modal" data-target="#modal_story_logo" (click)="addImage()">
+        Add Image
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <app-story-images class="col-sm-2" *ngFor="let file of this.storyService.currentStoryImages" [fileUpload]="file"></app-story-images>
+      </div>
+    </div>
+  </div>
+  <!-- end card-->
+
+  <h1 class="ui horizontal divider header">
+    Story on {{ storyService.currentStory?.dateAdded }}
+  </h1>
+
+  <div class="ui raised orange segment">
+    <div class="ui items">
+      <div class="ui small item">
+        <div class="image">
+          <img src="{{ storyService.currentStory?.logoImage && storyService.currentStory?.logoUrl || 'assets/images/avatars/test.svg' }}">
+        </div>
+        <div class="middle aligned content">
+          <div class="header">
+            <h1>Story</h1>
+          </div>
+          <div class="meta">
+            <h4>About: </h4>
+          </div>
+          <div class="description">
+            <p>
+              {{ storyService.currentStory?.description }}
+            </p>
+          </div>
+          <div class="extra">
+            <strong>Added on {{ storyService.currentStory?.dateAdded }}</strong>
+            <div class="ui right floated orange button" data-toggle="modal" data-target="#modal_update_story">
+              <i class="icon pencil"></i> Edit details
+            </div>
+            <div class="ui right floated orange button" data-toggle="modal" data-target="#modal_story_logo">
+              <i class="icon pencil"></i> Change profile
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ui segments">
+    <div class="ui  aligned orange segment">
+      <h1>Statistics</h1>
+    </div>
+    <div class="ui orange segment">
+      <div class="ui orange progress" data-value="70" data-total="100">
+        <div class="bar">
+          <div class="progress"></div>
+        </div>
+        <div class="label">70% Funded</div>
+      </div>
+    </div>
+    <div class="ui segment">
+      <h4>Date added: </h4>{{ storyService.currentStory?.dateAdded }}
+    </div>
+    <div class="ui segment">
+      <h4>Duration: </h4>{{ storyService.currentStory?.timeAllocated }} days
+    </div>
+    <div class="ui segment">
+      <h4>Closure Date: </h4>15th July 2015 (TODO: STATIC DATA)
+    </div>
+    <div class="ui segment">
+      <h4>Time remaining: </h4>20 days (TODO: STATIC DATA)
+    </div>
+    <div class="ui segment">
+      <h4>Target Amount: </h4>{{ storyService.currentStory?.targetAmount }} USD
+    </div>
+    <div class="ui segment">
+      <h4>Donated Amount: </h4>{{ storyService.currentStory?.donatedAmount }} USD
+    </div>
+    <div class="ui segment">
+      <h4>Remaining Amount: </h4>{{ storyService.currentStory?.targetAmount - storyService.currentStory?.donatedAmount }} USD
+    </div>
+    <div class="ui segment">
+      <h4>Number of Donations: </h4>{{ storyService.currentStoryDonations?.length }} donations
+    </div>
+    <div class="ui segment">
+      <h4>Donors involved: </h4>{{ storyService.currentStory?.donorsNumber }} donors
+    </div>
+  </div>
+
+  <h1 class="ui horizontal divider header text-warning">
+    Brands Donated
+  </h1>
+
+  <div class="ui five doubling cards">
+    <a class="ui fluid raised orange card" *ngFor="let brand of storyService.currentStoryBrands">
+      <div class="image">
+        <img src="{{ brand?.logoImage && brand?.logoUrl || 'assets/images/avatars/test.svg' }}">
+      </div>
+      <div class="content">
+        <div class="header">{{ brand?.name }}</div>
+        <div class="description">
+          Micro fundit company... (TODO: STATIC DATA)
+        </div>
+      </div>
+    </a>
+  </div>
+
+  <h1 class="ui horizontal divider header text-warning">
+    Donations Matched
+  </h1>
+  <table class="ui selectable inverted table">
+    <thead>
+      <tr>
+        <th>Donor</th>
+        <th>Charity</th>
+        <th>Story</th>
+        <th>Donated A.(USD)</th>
+        <th>Brand A.(USD)</th>
+        <th>Microfundit A.(USD)</th>
+        <th>Story A.(USD)</th>
+        <th class="right aligned">Matched A.(USD)</th>
+        <th class="right aligned">Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let donation of storyService.currentStoryDonations">
+        <td>{{donation?.donor?.firstName}} {{donation?.donor?.lastName}}</td>
+        <td>{{ donation?.story?.charity?.name }}</td>
+        <td>{{ donation?.story?.description }}</td>
+        <td>{{ donation?.amount }}</td>
+        <td>{{ donation?.totalBrandAmount }}</td>
+        <td>{{ donation?.totalStoryAmount }}</td>
+        <td>{{ donation?.totalMicrofunditAmount }}</td>
+        <td class="right aligned">9 (TODO STATIC DATA)</td>
+        <td class="right aligned">{{ donation?.dateAdded }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <h1 class="ui horizontal divider header text-warning">
+    Donors
+  </h1>
+  <table class="ui selectable inverted table">
+    <thead>
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Gender</th>
+        <th>Phone Number</th>
+        <th>Email</th>
+        <th>Date of Birth</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let donor of storyService.currentStoryDonors">
+        <td>{{ donor?.firstName }}</td>
+        <td>{{ donor?.lastName }}</td>
+        <td>{{ donor?.gender }}</td>
+        <td>{{ donor?.phoneNumber }}</td>
+        <td>{{ donor?.email }}</td>
+        <td>{{ donor?.dateOfBirth }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

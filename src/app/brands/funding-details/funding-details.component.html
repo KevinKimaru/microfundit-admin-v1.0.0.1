@@ -1,0 +1,152 @@
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a [routerLink]="['/home']">Home</a>
+  </li>
+  <li class="breadcrumb-item">
+    <a [routerLink]="['/brands']">Brands</a>
+  </li>
+  <li class="breadcrumb-item">
+    <a [routerLink]="['/brands', brandService.currentBrand && brandService.currentBrand?.id || fundingService.currentFunding?.brand && fundingService.currentFunding?.brand?.id]">{{ fundingService.currentFunding?.brand?.name }}</a>
+  </li> 
+  <li class="breadcrumb-item active">Funding {{ fundingService.currentFunding?.id }}</li>
+</ol>
+<div class="my-body">
+
+  <h1 class="ui horizontal divider header">
+    Funding on {{ fundingService.currentFunding?.dateAdded }} by {{ fundingService.currentFunding?.brand?.name }}
+  </h1>
+
+  <div class="ui segments">
+    <div class="ui  aligned orange segment">
+      <h1>Statistics</h1>
+      <!-- <button class="ui  icon huge orange button" data-toggle="modal" data-target="#modal_add_brand">
+        <i class="icon pencil"></i>Edit Funding</button> -->
+    </div>
+    <div class="ui orange segment">
+      <sui-progress class="warning" [value]="(fundingService.currentFunding?.placedAmount - fundingService.currentFunding?.currentAmount)/fundingService.currentFunding?.placedAmount * 100">
+        {{ (fundingService.currentFunding?.placedAmount - fundingService.currentFunding?.currentAmount)/fundingService.currentFunding?.placedAmount
+        * 100 }}% matched
+      </sui-progress>
+    </div>
+    <div class="ui segment">
+      <h4>Brand: </h4>
+      {{ fundingService.currentFunding?.brand?.name }}
+    </div>
+    <div class="ui segment">
+      <h4>Donated Amount: </h4>
+      <!-- <span counter-up offset="1" number="259000">0</span> -->
+      {{ fundingService.currentFunding?.placedAmount }} USD
+    </div>
+    <div class="ui segment">
+      <h4>Ratio </h4>{{ fundingService.currentFunding?.ratio }}:1
+    </div>
+    <div class="ui segment">
+      <h4>Matched Amount: </h4>{{ fundingService.currentFunding?.placedAmount - fundingService.currentFunding?.currentAmount
+      }} USD
+    </div>
+    <div class="ui segment">
+      <h4>Balance: </h4>
+      {{ fundingService.currentFunding?.currentAmount }} USD
+    </div>
+    <div class="ui segment">
+      <h4>Donations Matched: </h4>{{ fundingService.currentFunding?.donationsNumber }} donations
+    </div>
+    <div class="ui segment">
+      <h4>Donors involved: </h4>{{ fundingService.currentFunding?.donorsNumber }} donors
+    </div>
+    <div class="ui segment">
+      <h4>Highest Donation Matched: </h4>{{ fundingService.currentFunding?.highestDonation }} USD
+    </div>
+    <div class="ui segment">
+      <h4>Stories donated to: </h4>{{ fundingService.currentFunding?.storiesNumber }} stories
+    </div>
+    <div class="ui segment">
+      <h4>Charities involved: </h4>{{ fundingService.currentFunding?.charitiesNumber }} charities
+    </div>
+  </div>
+
+  <h1 class="ui horizontal divider header text-warning">
+    Stories Funded
+  </h1>
+  <div class="ui four doubling cards">
+    <a class="ui fluid raised orange card" *ngFor="let story of fundingService.currentFundingStories">
+      <div class="image">
+        <img src="assets/images/avatars/test.svg">
+      </div>
+      <div class="content">
+        <div class="header">{{ story?.charity?.name }}</div>
+        <div class="description">
+          {{ story?.description }}
+        </div>
+      </div>
+      <div class="content">
+        <strong>Matches: </strong>
+        {{ story?.currentFundingMatches }} matches
+      </div>
+      <div class="content">
+        <strong>Total amount: </strong>
+        {{ story?.currentFundingTotalAmount }} USD
+      </div>
+      <div class="content">
+        <strong>Donors: </strong>
+        {{ story?.currentFundingDonors }} donors
+      </div>
+    </a>
+  </div>
+  <h1 class="ui horizontal divider header text-warning">
+    Donations Matched
+  </h1>
+  <table class="ui selectable inverted table">
+    <thead>
+      <tr>
+        <th>Donor</th>
+        <th>Charity</th>
+        <th>Story</th>
+        <th>Donated A.(USD)</th>
+        <th>Brand A.(USD)</th>
+        <th>Microfundit A.(USD)</th>
+        <th>Story A.(USD)</th>
+        <th class="right aligned">Matched A.(USD)</th>
+        <th class="right aligned">Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let donation of fundingService.currentFundingDonations">
+        <td>{{donation?.donor?.firstName}} {{donation?.donor?.lastName}}</td>
+        <td>{{ donation?.story?.charity?.name }}</td>
+        <td>{{ donation?.story?.description }}</td>
+        <td>{{ donation?.amount }}</td>
+        <td>{{ donation?.totalBrandAmount }}</td>
+        <td>{{ donation?.totalStoryAmount }}</td>
+        <td>{{ donation?.totalMicrofunditAmount }}</td>
+        <td class="right aligned">9 (TODO STATIC DATA)</td>
+        <td class="right aligned">{{ donation?.dateAdded }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <h1 class="ui horizontal divider header text-warning">
+    Donors
+  </h1>
+  <table class="ui selectable inverted table">
+    <thead>
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Gender</th>
+        <th>Phone Number</th>
+        <th>Email</th>
+        <th>Date of Birth</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let donor of fundingService.currentFundingDonors">
+        <td>{{ donor?.firstName }}</td>
+        <td>{{ donor?.lastName }}</td>
+        <td>{{ donor?.gender }}</td>
+        <td>{{ donor?.phoneNumber }}</td>
+        <td>{{ donor?.email }}</td>
+        <td>{{ donor?.dateOfBirth }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

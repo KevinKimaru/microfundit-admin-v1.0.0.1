@@ -1,0 +1,130 @@
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a [routerLink]="['/home']">Home</a>
+  </li>
+  <li class="breadcrumb-item">
+    <a [routerLink]="['/charities']">Charities</a>
+  </li>
+  <li class="breadcrumb-item active">{{ charityService.currentCharity?.name }}</li>
+</ol>
+<div class="my-body">
+  <h1 class="ui horizontal divider header">
+    {{ charityService.currentCharity?.name }}
+  </h1>
+
+  <div class="modal fade custom-modal" tabindex="-1" role="dialog" aria-hidden="true" id="modal_charity_logo">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title">Edit Charity Profile Picture</h5>
+          <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Close</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <app-charity-logo></app-charity-logo>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade custom-modal" tabindex="-1" role="dialog" aria-hidden="true" id="modal_update_charity">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title">Update Charity</h5>
+          <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Close</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <app-charity-form></app-charity-form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade custom-modal" tabindex="-1" role="dialog" aria-hidden="true" id="modal_add_story">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title">Add Story</h5>
+          <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Close</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <app-story-form></app-story-form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ui raised orange segment">
+    <div class="ui items">
+      <div class="ui small item">
+        <div class="image">
+          <img src="{{ charityService.currentCharity?.logoImage && charityService.currentCharity?.logoUrl || 'assets/images/avatars/test.svg' }}">
+        </div>
+        <div class="middle aligned content">
+          <div class="header">
+            <h1>{{ charityService.currentCharity?.name }}</h1>
+          </div>
+          <div class="meta">
+            <h4>About {{ charityService.currentCharity?.name }}: </h4>
+          </div>
+          <div class="description">
+            <p>
+                {{ charityService.currentCharity?.description }}
+            </p>
+          </div>
+          <div class="extra">
+            <strong>Joined on {{ charityService.currentCharity?.dateAdded }}</strong>
+            <div class="ui right floated orange button" data-toggle="modal" data-target="#modal_update_charity">
+              <i class="icon pencil"></i> Edit details
+            </div>
+            <div class="ui right floated orange button" data-toggle="modal" data-target="#modal_charity_logo">
+              <i class="icon pencil"></i> Change Profile Pic
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ui inverted segment">
+    <div class="middle aligned content">
+      <div class="ui orange inverted statistic">
+        <div class="value">
+            {{ charityService.currentCharityStories?.length }}
+        </div>
+        <div class="label">
+          Stories
+        </div>
+      </div>
+      <button class="ui right floated icon huge orange button" data-toggle="modal" data-target="#modal_add_story">
+        <i class="icon add"></i>Add Story</button>
+    </div>
+  </div>
+
+  <div class="ui five doubling cards">
+    <a class="ui fluid raised orange card" *ngFor="let story of charityService.currentCharityStories" (click)="navigate(story)">
+      <div class="image">
+        <img src="{{ story?.logoImage && story?.logoUrl || 'assets/images/avatars/test.svg' }}">
+      </div>
+      <div class="content">
+        <div class="description">
+          {{ story?.description }}
+        </div>
+      </div>
+    </a>
+  </div>
+</div>

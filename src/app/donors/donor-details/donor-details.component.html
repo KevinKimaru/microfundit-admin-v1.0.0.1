@@ -1,0 +1,142 @@
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a [routerLink]="['/home']">Home</a>
+  </li>
+  <li class="breadcrumb-item">
+    <a [routerLink]="['donors']">Donors</a>
+  </li>
+  <li class="breadcrumb-item active">{{ donorService.currentDonor?.firstName }}</li>
+</ol>
+<div class="my-body">
+  <h1 class="ui horizontal divider header">
+    {{ donorService.currentDonor?.firstName }}
+  </h1>
+
+  <div class="ui raised orange segment">
+    <div class="ui items">
+      <div class="ui small item">
+        <div class="image">
+          <img src="assets/images/avatars/test.svg">
+        </div>
+        <div class="middle aligned content">
+          <div class="header">
+            <h1>{{ donorService.currentDonor?.firstName }} {{ donorService.currentDonor?.lastName }}</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ui segments">
+    <div class="ui  aligned orange segment">
+      <h1>Details & Statistics</h1>
+    </div>
+    <div class="ui orange segment">
+      <h4>Date of Registration: </h4>{{ donorService.currentDonor?.dateAdded }}
+    </div>
+    <div class="ui segment">
+      <h4>First Name: </h4>{{ donorService.currentDonor?.firstName }}
+    </div>
+    <div class="ui segment">
+      <h4>Last Name </h4>{{ donorService.currentDonor?.firstName }}
+    </div>
+    <div class="ui segment">
+      <h4>Email </h4>{{ donorService.currentDonor?.email }}
+    </div>
+    <div class="ui segment">
+      <h4>Phone NUmber </h4>{{ donorService.currentDonor?.phoneNumber }}
+    </div>
+    <div class="ui segment">
+      <h4>Gender </h4>{{ (donorService.currentDonor?.gender) == 1 ? 'Male' : 'Female' }}
+    </div>
+    <div class="ui segment">
+      <h4>Date Of Birth </h4>{{ donorService.currentDonor?.dateOfBirth }}
+    </div>
+    <div class="ui segment">
+      <h4>No. of Donations </h4>{{ donorService.currentDonorDonations?.length }} donations
+    </div>
+    <div class="ui segment">
+      <h4>No. of stories donated to: </h4>{{ donorService.currentDonor?.storiesNumber }} stories
+    </div>
+    <div class="ui segment">
+      <h4>No. of charities donated to: </h4>{{ donorService.currentDonor?.charitiesNumber }} charities
+    </div>
+    <div class="ui segment">
+      <h4>Lastly donated: </h4>8th March 2015
+    </div>
+  </div>
+
+  <h1 class="ui horizontal divider header">
+    {{donorService.currentDonor?.firstName}}'s Donations ({{ donorService.currentDonorDonations?.length }})
+  </h1>
+  <div class="ui three doubling cards">
+    <div class="ui fluid raised olive card" *ngFor="let donation of donorService.currentDonorDonations">
+      <div class="content">
+        <div class="header">{{ donation?.dateAdded }}</div>
+      </div>
+      <div class="content">
+        <div class="ui raised segments">
+          <div class="ui orange segment">
+            <div class="description">
+              <p>
+                <strong>Charity: </strong>
+              </p>
+              <div class="ui small horizontal list">
+                <div class="ui item">
+                  <div class="ui avatar image">
+                    <img src="{{ donation?.story?.charity?.logoImage && donation?.story?.charity?.logoUrl || 'assets/images/avatars/test.svg' }}">
+                  </div>
+                  <div class="middle aligned content">
+                    <div class="header">
+                      <h1>{{ donation?.story?.charity?.name }}</h1>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ui segment">
+            <div class="description">
+              <p>
+                <strong>Story: </strong>
+              </p>
+              <div class="ui small horizontal list">
+                <div class="ui item">
+                  <div class="ui avatar image">
+                    <img src="{{ donation?.story?.logoImage && donation?.story?.logoUrl || 'assets/images/avatars/test.svg' }}">
+                  </div>
+                  <div class="middle aligned content">
+                    <p>{{ donation?.story?.description }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ui segment">
+            <div class="description">
+              <strong>Donated Amount: </strong> {{ donation?.amount }} USD</div>
+          </div>
+          <div class="ui segment">
+            <div class="description">
+              <strong>Matched Amount: </strong> {{ donation?.matchedAmount }} USD</div>
+          </div>
+          <div class="ui segment">
+            <div class="description">
+              <p>
+                <strong>Brands Matched </strong>
+              </p>
+              <div class="ui small horizontal divided list">
+                <div class="item" *ngFor="let brand of donation?.matchedBrands">
+                  <img class="ui avatar image" src="{{ brand?.logoImage && brand?.logoUrl || 'assets/images/avatars/test.svg' }}">
+                  <div class="content">
+                    <div class="header">{{ brand?.name }}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

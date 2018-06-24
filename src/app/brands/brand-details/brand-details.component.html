@@ -1,0 +1,273 @@
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a [routerLink]="['/home']">Home</a>
+  </li>
+  <li class="breadcrumb-item">
+    <a [routerLink]="['/brands']">Brands</a>
+  </li>
+  <li class="breadcrumb-item active">{{ brandService.currentBrand?.name }}</li>
+</ol>
+<div class="my-body">
+  <h1 class="ui horizontal divider header">
+    {{ brandService.currentBrand?.name }}
+  </h1>
+
+  <div class="modal fade custom-modal" tabindex="-1" role="dialog" aria-hidden="true" id="modal_brand_logo">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title">Edit Brand Logo</h5>
+          <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Close</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <app-brand-logo></app-brand-logo>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade custom-modal" tabindex="-1" role="dialog" aria-hidden="true" id="modal_update_brand">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title">Update Brand</h5>
+          <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Close</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <app-brand-form></app-brand-form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade custom-modal" tabindex="-1" role="dialog" aria-hidden="true" id="modal_add_funding">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title">Add Funding</h5>
+          <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Close</span>
+          </button>
+        </div> 
+
+        <div class="modal-body">
+          <app-funding-form></app-funding-form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ui raised orange segment">
+    <div class="ui items">
+      <div class="ui small item">
+        <div class="image">
+          <img src="{{ brandService.currentBrand?.logoImage && brandService.currentBrand?.logoUrl || 'assets/images/avatars/test.svg'}}">
+        </div>
+        <div class="middle aligned content">
+          <div class="header">
+            <h1>{{ brandService.currentBrand?.name }}</h1>
+          </div>
+          <div class="meta">
+            <h4>About {{ brandService.currentBrand?.name }}: </h4>
+          </div>
+          <div class="description">
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui nobis vero voluptates quae reiciendis modi facere,
+              veniam vitae facilis officia dolores rem consequuntur praesentium, aliquam ex. Perspiciatis labore officia
+              possimus? (TODO: STATIC DATA)
+            </p>
+          </div>
+          <div class="extra">
+            <strong>Joined on {{ brandService.currentBrand?.dateAdded }}</strong>
+            <div class="ui right floated orange button" data-toggle="modal" data-target="#modal_update_brand">
+              <i class="icon pencil"></i>Edit details
+            </div>
+            <div class="ui right floated orange button" data-toggle="modal" data-target="#modal_brand_logo">
+              <i class="icon pencil"></i>Change Logo
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ui inverted segment">
+    <div class="middle aligned content">
+      <div class="ui orange inverted statistic">
+        <div class="value">
+          {{ brandService.currentBrandFundings?.length }}
+        </div>
+        <div class="label">
+          Fundings
+        </div>
+      </div>
+      <button class="ui right floated icon huge orange button" data-toggle="modal" data-target="#modal_add_funding">
+        <i class="icon add"></i>Fund</button>
+    </div>
+  </div>
+
+  <div class="ui four doubling cards">
+    <a class="ui fluid raised olive card" *ngFor="let funding of brandService.currentBrandFundings" (click)="navigate(funding)">
+      <div class="content">
+        <div class="header">{{ funding?.dateAdded }}</div>
+      </div>
+      <div class="content">
+        <div class="ui raised segments">
+          <div class="ui orange segment">
+            <div class="description">
+              <strong>Ratio: </strong> {{ funding?.ratio }}:1</div>
+          </div>
+          <div class="ui orange segment">
+            <div class="description">
+              <strong>Funded Amount: </strong>{{ funding?.placedAmount }} USD</div>
+          </div>
+          <div class="ui segment">
+            <div class="description">
+              <strong>Matched Amount: </strong>{{ funding?.placedAmount - funding?.currentAmount }}USD</div>
+          </div>
+          <div class="ui segment">
+            <div class="description">
+              <strong>Balance </strong>{{ funding?.currentAmount }} USD</div>
+          </div>
+          <div class="ui segment">
+            <div class="description">
+              <strong>Donations Matched: </strong> {{ funding?.donationsNumber }}</div>
+          </div>
+          <div class="ui segment">
+            <div class="ui orange progress" data-value="70" data-total="100">
+              <div class="bar">
+                <div class="progress"></div>
+              </div>
+              <div class="label">{{ (funding?.placedAmount - funding?.currentAmount)/funding?.placedAmount * 100 }}% Matched</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+
+  <div class="ui segments">
+    <div class="ui  aligned orange segment">
+      <h1>Statistics</h1>
+    </div>
+    <div class="ui segment">
+      <h4>All Fundings: </h4>{{ brandService.currentBrandFundings?.length }} funding(s)
+    </div>
+    <div class="ui segment">
+      <h4>Active Fundings: </h4>{{ brandService.currentBrandActiveFundings?.length }} funding(s)
+    </div>
+    <div class="ui segment">
+      <h4>Total Amount Contributed: </h4>{{ brandService.currentBrandTotalAmountFunded }} USD
+    </div>
+    <div class="ui segment">
+      <h4>Matched Amount: </h4>{{ brandService.currentBrandMatchedAmountFunded }} USD
+    </div>
+    <div class="ui segment">
+      <h4>Donations Matched: </h4>{{ brandService.currentBrandDonations?.length }} donations
+    </div>
+    <div class="ui segment">
+      <h4>Donors involved: </h4>{{ brandService.currentBrandDonors?.length }} donors
+    </div>
+    <div class="ui segment">
+      <h4>Stories donated to: </h4>{{ brandService.currentBrandStories?.length }} stories
+    </div>
+    <div class="ui segment">
+      <h4>Charities involved: </h4>{{ brandService.currentBrandCharities?.length }} charities
+    </div>
+  </div>
+  <h1 class="ui horizontal divider header text-warning">
+    Stories Funded
+  </h1>
+  <div class="ui four doubling cards">
+    <a class="ui fluid raised orange card" *ngFor="let story of brandService.currentBrandStories">
+      <div class="image">
+        <img src="{{ story?.logoImage && story?.logoUrl || 'assets/images/avatars/test.svg' }}">
+      </div>
+      <div class="content">
+        <div class="header">{{ story?.charity?.name }}</div>
+        <div class="description">
+          {{ story?.description }}
+        </div>
+      </div>
+      <div class="content">
+        <strong>Matches: </strong>
+        {{ story?.currentBrandMatches }} matches
+      </div>
+      <div class="content">
+        <strong>Total amount: </strong>
+        {{ story?.currentBrandTotalAmount }} USD
+      </div>
+      <div class="content">
+        <strong>Donors: </strong>
+        {{ story?.currentBrandDonors }} donors
+      </div>
+    </a>
+  </div>
+  <h1 class="ui horizontal divider header text-warning">
+    Donations Matched
+  </h1>
+  <table class="ui selectable inverted table">
+    <thead>
+      <tr>
+        <th>Donor</th>
+        <th>Charity</th>
+        <th>Story</th>
+        <th>Donated A.(USD)</th>
+        <th>Brand A.(USD)</th>
+        <th>Story A.(USD)</th>
+        <th>Microfundit A.(USD)</th>
+        <th class="right aligned">Matched A.(USD)</th>
+        <th class="right aligned">Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let donation of brandService.currentBrandDonations">
+        <td>{{donation?.donor?.firstName}} {{donation?.donor?.lastName}}</td>
+        <td>{{ donation?.story?.charity?.name }}</td>
+        <td>{{ donation?.story?.description }}</td>
+        <td>{{ donation?.amount }}</td>
+        <td>{{ donation?.totalBrandAmount }}</td>
+        <td>{{ donation?.totalStoryAmount }}</td>
+        <td>{{ donation?.totalMicrofunditAmount }}</td>
+        <td class="right aligned">9 (TODO STATIC DATA)</td>
+        <td class="right aligned">{{ donation?.dateAdded }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <h1 class="ui horizontal divider header text-warning">
+    Donors
+  </h1>
+  <table class="ui selectable inverted table">
+    <thead>
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Gender</th>
+        <th>Phone Number</th>
+        <th>Email</th>
+        <th>Date of Birth</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let donor of brandService.currentBrandDonors">
+        <td>{{ donor?.firstName }}</td>
+        <td>{{ donor?.lastName }}</td>
+        <td>{{ donor?.gender }}</td>
+        <td>{{ donor?.phoneNumber }}</td>
+        <td>{{ donor?.email }}</td>
+        <td>{{ donor?.dateOfBirth }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
